@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"food-app/domain/entity"
 	"food-app/domain/repository"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -16,6 +17,7 @@ type Repositories struct {
 
 func NewRepositories(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName string) (*Repositories, error) {
 	DBURL := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DbHost, DbPort, DbUser, DbName, DbPassword)
+	fmt.Println(DBURL)
 	db, err := gorm.Open(Dbdriver, DBURL)
 	if err != nil {
 		return nil, err
