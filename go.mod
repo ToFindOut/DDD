@@ -7,8 +7,9 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-redis/redis/v7 v7.0.0-beta.6
-	github.com/go-sql-driver/mysql v1.5.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jinzhu/gorm v1.9.12
+	github.com/jinzhu/now v1.1.3 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/minio/minio-go/v6 v6.0.50
 	github.com/myesui/uuid v1.0.0 // indirect

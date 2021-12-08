@@ -1,11 +1,13 @@
 package persistence
 
 import (
-	"fmt"
 	"food-app/domain/entity"
 	"food-app/domain/repository"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-sql-driver/mysql"
+	"time"
+	//"gorm.io/driver/mysql"
 	"github.com/jinzhu/gorm"
+	//_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -16,9 +18,23 @@ type Repositories struct {
 }
 
 func NewRepositories(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName string) (*Repositories, error) {
-	DBURL := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", DbHost, DbPort, DbUser, DbName, DbPassword)
-	fmt.Println(DBURL)
-	db, err := gorm.Open(Dbdriver, DBURL)
+	cfg := mysql.Config{
+		User:                 DbUser,
+		Passwd:               DbPassword,
+		Net:                  "tcp",
+		Addr:                 DbHost + ":" + DbPort,
+		DBName:               DbName,
+		Collation:            "utf8mb4_general_ci",
+		Loc:                  time.FixedZone("Asia/Shanghai", 8*60*60),
+		Timeout:              time.Second,
+		ReadTimeout:          30 * time.Second,
+		WriteTimeout:         30 * time.Second,
+		AllowNativePasswords: true,
+		ParseTime:            true,
+	}
+
+	db, err := gorm.Open(Dbdriver, cfg.FormatDSN())
+
 	if err != nil {
 		return nil, err
 	}
